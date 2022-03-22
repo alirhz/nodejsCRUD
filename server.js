@@ -1,6 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const foodRouter = require("./routes/foodRoutes.js");
+const ProductRouter = require("./routes/ProductRoutes.js");
 const User = require('./models/users');
 const bodyParser = require('body-parser');
 const jsonwebtoken = require("jsonwebtoken");
@@ -31,6 +31,8 @@ app.use(function(req, res, next) {
     }
   });
 
+  app.use(ProductRouter);
+
   var routes = require('./routes/userRoute');
   routes(app);
 
@@ -39,14 +41,15 @@ app.use(function(req, res, next) {
   });
 
   mongoose.connect(
-    'mongodb+srv://madmin:<password>@cluster0.gktce.mongodb.net/myFirstDatabase?retryWrites=true&w=majority',
+    'mongodb+srv://AliRghi:ali123@cluster0.gktce.mongodb.net/myFirstDatabase?retryWrites=true&w=majority',
   {
     useNewUrlParser: true,
     useUnifiedTopology: true
   }
 );
 
-app.use(foodRouter);
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json())
 
 app.listen(3000, () => {
   console.log("Server is running:" + 3000);

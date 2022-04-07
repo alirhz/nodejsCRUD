@@ -11,16 +11,10 @@ const ProductSchema = new mongoose.Schema({
       required: false,
       default: 0,
       validate(value) {
-        if (value < 0) throw new Error("Negative price aren't real.");
+        if (value < 0) throw new Error("Negative price aren't valid.");
       },
     },
-    img:
-    {
-        type: String,
-        data: Buffer,
-        required: false,
-        contentType: String
-    }
+    image: {}
   });
 
   const Product = mongoose.model("Product", ProductSchema);

@@ -8,11 +8,6 @@ const jsonwebtoken = require("jsonwebtoken");
 
 const app = express();
 
-const option = {
-    socketTimeoutMS: 30000,
-    keepAlive: true,
-    reconnectTries: 30000
-};
 
 app.use(express.json());
 app.use((req, res, next) => {
@@ -38,6 +33,8 @@ app.use((req, res, next) => {
   // Pass to next layer of middleware
   next();
 });
+
+app.use('/uploads', express.static('./uploads'));
 
 app.use(function(req, res, next) {
     if (req.headers && req.headers.authorization && req.headers.authorization.split(' ')[0] === 'JWT') {
@@ -72,8 +69,11 @@ app.use(function(req, res, next) {
   }
 );
 
-app.use(bodyParser.json({limit: '50mb'}));
-app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
+app.use(bodyParser.urlencoded({ extended: true }))
+// app.use(bodyParser.json({limit: '50mb'}))
+app.use(express.json({limit: '50mb'}));
+// app.use(express.urlencoded({limit: '50mb'}))
+
 
 app.listen(3000, () => {
   console.log("Server is running:" + 3000);

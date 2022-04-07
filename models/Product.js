@@ -3,22 +3,18 @@ const mongoose = require("mongoose");
 const ProductSchema = new mongoose.Schema({
     name: {
       type: String,
-      required: true,
+      required: false,
       trim: true,
     },
     price: {
       type: Number,
+      required: false,
       default: 0,
       validate(value) {
-        if (value < 0) throw new Error("Negative price aren't real.");
+        if (value < 0) throw new Error("Negative price aren't valid.");
       },
     },
-    img:
-    {
-      data: Buffer,
-      required: false,
-      contentType: String
-    }
+    image: {}
   });
 
   const Product = mongoose.model("Product", ProductSchema);

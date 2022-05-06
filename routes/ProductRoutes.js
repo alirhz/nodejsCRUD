@@ -69,4 +69,15 @@ app.delete("/Product/:id", async (request, response) => {
   }
 });
 
+app.get("/Product/:id", async (request, response) => {
+  console.log(150, request.params.id);
+  const images = await ProductModel.findById(request.params.id);
+  console.log(images);
+  try {
+    response.send(images);
+  } catch (error) {
+    response.status(500).send(error);
+  }
+});
+
 module.exports = app;
